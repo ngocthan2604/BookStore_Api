@@ -3,12 +3,17 @@ const cors = require("cors");
 const morgan = require("morgan");
 var bodyParser = require("body-parser");
 const connectDb = require("./db");
+const authorRouter = require("./controllers/author.controllers");
+const bookRouter = require("./controllers/book.controllers");
 
 const app = express();
 
 app.use(cors());
 app.use(morgan("common"));
 app.use(bodyParser.json({ limit: "50mb" }));
+
+app.use("/v1/author", authorRouter);
+app.use("/v1/book", bookRouter);
 
 connectDb()
   .then(() => {
